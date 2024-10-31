@@ -3,7 +3,7 @@ venv/
 env/
 .env/
 .venv/
-
+/venv/
 # Python
 __pycache__/
 *.py[cod]
@@ -55,3 +55,4 @@ htmlcov/
 coverage.xml
 *.cover
 
+venv/

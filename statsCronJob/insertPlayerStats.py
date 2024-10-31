@@ -1,15 +1,29 @@
+import certifi
+import os
+import ssl
+import urllib3
 import nfl_data_py as nfl
 import pandas as pd
 import pickle
 import redis
 import json
+import math
+# Set certificate path explicitly for macOS
+cert_path = '/Library/Frameworks/Python.framework/Versions/3.11/etc/openssl/cert.pem'
+os.environ['SSL_CERT_FILE'] = cert_path
+os.environ['REQUESTS_CA_BUNDLE'] = cert_path
+
+# If still having issues, uncomment the following line (less secure but will work)
+# ssl._create_default_https_context = ssl._create_unverified_context
 
 r = redis.Redis(
     host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
     port=11531,
     password='6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
 
-def get_player_stats(Players):
+def get_player_stats(player_list):
+    import json
+
     data_list = nfl.import_weekly_data([2024])
     df = data_list
     """
@@ -24,7 +38,7 @@ def get_player_stats(Players):
               containing the requested statistics.
     """
     stats = {}
-    for player_name, position in Players:
+    for player_name, position in player_list:
         # Filter the dataframe for the current player
         player_df = df[df['player_display_name'] == player_name]
         
@@ -32,81 +46,31 @@ def get_player_stats(Players):
             print(f"No data found for player: {player_name}")
             continue
 
-        # Define requested columns based on position
-        requested_columns = get_requested_columns(position, player_name, df)
-        if not requested_columns:
-            continue
+        try:
+            # Extract all available statistics for the player
+            player_stats = player_df.iloc[-1].to_dict()
 
-        # Extract the requested statistics
-        player_stats = player_df[requested_columns].iloc[-1].to_dict()
-        stats[player_name] = player_stats
+            for key, value in player_stats.items():
+                if isinstance(value, float) and math.isnan(value):
+                    player_stats[key] = None
+            # Ensure all values are JSON serializable
+            for key, value in player_stats.items():
+                print(key, type(value))
+                if not isinstance(value, (str, int, float, bool, list, dict, type(None))):
+                    continue
+                    print(f"Non-serializable value: {value} for key: {key}")
+
+            stats[player_name] = player_stats
+        except (TypeError, ValueError) as e:
+            print(f"Serialization error for player '{player_name}': {e}")
+            # Optionally, you can log the error or handle it as needed
+            continue
 
     return stats
 
-def get_requested_columns(position, player_name, df):
-    position_columns = {
-        "WR": [
-            'fantasy_points',
-            'target_share',
-            'receiving_yards',
-            'receiving_tds',
-            'receptions',
-            'receiving_fumbles',
-            'fantasy_points_ppr',
-            'receiving_yards_after_catch'
-        ],
-        "QB": [
-            'fantasy_points',
-            'passing_yards',
-            'passing_tds',
-            'interceptions',
-            'rushing_yards',
-            'rushing_tds',
-            'rushing_fumbles',
-            'fantasy_points_ppr'
-        ],
-        "RB": [
-            'fantasy_points',
-            'target_share',
-            'rushing_yards',
-            'rushing_tds',
-            'receptions',
-            'carries',
-            'rushing_fumbles',
-            'receiving_yards',
-            'receiving_tds',
-            'fantasy_points_ppr'
-        ],
-        "TE": [
-            'fantasy_points',
-            'target_share',
-            'receiving_yards',
-            'receiving_tds',
-            'receptions',
-            'fantasy_points_ppr'
-        ],
-        "K": [
-            'fantasy_points',
-            'extra_points_made',
-            'extra_points_attempted'
-        ]
-    }
-
-    requested_columns = position_columns.get(position)
-    if not requested_columns:
-        print(f"Unsupported position '{position}' for player '{player_name}'. Skipping.")
-        return None
-
-    # Check if all requested columns exist in the dataframe
-    missing_columns = [col for col in requested_columns if col not in df.columns]
-    if missing_columns:
-        print(f"Missing columns for player '{player_name}': {missing_columns}")
-        return None
-
-    return requested_columns
-
 def main():
-    PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
+    # PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
+    PLAYER_LIST = [['Drake London', 'WR']]
     try:
         stats = get_player_stats(PLAYER_LIST)
     except Exception as e:
@@ -115,6 +79,8 @@ def main():
 
     # Store each player's stats as a separate JSON entry in Redis
     pipeline = r.pipeline()
+    print(stats)
+    # print(stats['Drake London'])
     for player, data in stats.items():
         key = f"player_stats:{player}"
         try:
