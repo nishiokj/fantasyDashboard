@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Fantasy Football Dashboard</h1>
+        
+        <div class="search-container">
+            <input type="text" id="playerSearch" placeholder="Enter player name" />
+            <button id="searchButton">Search</button>
+        </div>
+
+    <div id="playerData" class="player-card">
+        <div id="playerHeadshot"  ></div>
+        <!-- Player data will be displayed here -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

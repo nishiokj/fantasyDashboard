@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS
 import redis
 import json
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
 # Redis configuration
 REDIS_HOST = os.getenv('REDIS_HOST', 'redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com')
@@ -24,6 +24,7 @@ redis_client = redis.Redis(
     decode_responses=True  # Automatically decode responses to strings
 )
 
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
@@ -32,6 +33,7 @@ def health_check():
         return jsonify({'status': 'healthy', 'redis': 'connected'})
     except redis.ConnectionError:
         return jsonify({'status': 'unhealthy', 'redis': 'disconnected'}), 503
+    
 
 @app.route('/player/<player_name>', methods=['GET'])
 def get_player(player_name):

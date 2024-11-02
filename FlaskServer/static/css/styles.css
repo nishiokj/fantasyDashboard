@@ -1,0 +1,126 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-container {
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 200px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.player-card {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+/* New Styles for Player Header */
+.player-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#playerHeadshot {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 2px solid #007bff;
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-info h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.player-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Styles for Recent Stats */
+.player-card h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.player-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.player-card li {
+    background-color: #fff;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Container for all stats */
+.stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* gap: 10px; */
+    margin-bottom: 0px;
+
+.stat-column {
+    flex: 1 1 auto;
+    padding: 1%;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    /* margin: 5px; */
+    background-color: #f9f9f9;
+    /* min-width: 150px; */
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 65%;
+    text-align: center;
+
+/* Shorten column titles */
+.stat-column h4 {
+    font-size: 14px; /* Reduced font size for titles */
+    margin: 0 0 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .stat-column {
+        flex: 1 1 100%; /* Stack columns vertically on small screens */
+    }
+} 

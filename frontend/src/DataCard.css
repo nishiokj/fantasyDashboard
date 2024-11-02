@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.data-card {
+  font-family: 'Orbitron', sans-serif;
+  width: 100%; /* Adjust to match the PlayerCard's width */
+  border: 0.3vw solid #ccc;
+  border-radius: 0.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 25vw; /* Example height, adjust as needed */
+  margin-bottom: 0vw; /* Space between DataCards */
+}
+
+.data-card-header {
+  font-family: 'Orbitron', sans-serif;
+  height: 2vw;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  font-weight: bold;
+  padding-left: 0.4vw;
+  font-size: 1.5vw;
+}
+
+.data-card-mask {
+  background-color: rgba(255, 255, 255, 0.25); /* Light mask with 25% opacity */
+  pointer-events: none; /* Allow interactions with underlying content */
+  z-index: 1; /* Ensure the mask is below the content */
+}
+
+.insight-blocks {
+  font-family: 'Orbitron', sans-serif;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  gap: 0vw;
+  box-sizing: border-box;
+}

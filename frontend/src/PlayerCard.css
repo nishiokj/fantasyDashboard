@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.player-card {
+  font-family: 'Orbitron', sans-serif;
+  width: 100%; /* Adjust as needed */
+  border: 0.3vw solid #000; /* Temporary border color, overridden by inline styles */
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5vw;
+  font-weight: semi-bold;
+}
+
+.player-card-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.05); /* Light mask with 25% opacity */
+  pointer-events: none; /* Allow interactions with underlying content */
+  z-index: 1; /* Ensure the mask is below the content */
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  padding: 1vw;
+  z-index: 2; /* Ensure content is above the mask */
+  font-size: 1.5vw;
+  color: white; /* Set font color to white */
+}
+
+.player-header img {
+  width: 20vw;
+  height: 16vw;
+  border-radius: 10%;
+  /* Border color is set inline */
+  margin-right: 2vw;
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  padding: 1vw;
+  width: 100%;
+}
+
+.player-info h2 {
+  margin-bottom: 1vw;
+  font-size: 2vw;
+  border-bottom: 1px solid #000;
+  padding-bottom: 0.5vw;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added subtle shadow for a gamified look */
+  /* Optionally, you can also change the font-family to something more game-like */
+  /* font-family: 'Press Start 2P', cursive; */
+}
+
+.player-info .info-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0vw;
+}
+
+.player-info .info-column {
+  flex: 1; /* Adjust as needed */
+  border: 0.3vw solid #000;
+  border-radius: 0.1vw;
+  padding: 1vw;
+  box-sizing: border-box;
+  font-weight: semi-bold;
+  font-size: 1.5vw;
+}
+
+.player-info .info-columns p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2vw;
+  border-radius: 0.4vw;
+}
+
+.data-cards-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0vw;
+  gap: 0vw; /* Space between DataCards */
+  box-sizing: border-box;
+  z-index: 2; /* Ensure content is above the mask */
+}

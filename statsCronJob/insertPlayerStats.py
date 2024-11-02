@@ -55,7 +55,6 @@ def get_player_stats(player_list):
                     player_stats[key] = None
             # Ensure all values are JSON serializable
             for key, value in player_stats.items():
-                print(key, type(value))
                 if not isinstance(value, (str, int, float, bool, list, dict, type(None))):
                     continue
                     print(f"Non-serializable value: {value} for key: {key}")
@@ -69,8 +68,7 @@ def get_player_stats(player_list):
     return stats
 
 def main():
-    # PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
-    PLAYER_LIST = [['Drake London', 'WR']]
+    PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
     try:
         stats = get_player_stats(PLAYER_LIST)
     except Exception as e:
@@ -79,7 +77,6 @@ def main():
 
     # Store each player's stats as a separate JSON entry in Redis
     pipeline = r.pipeline()
-    print(stats)
     # print(stats['Drake London'])
     for player, data in stats.items():
         key = f"player_stats:{player}"
