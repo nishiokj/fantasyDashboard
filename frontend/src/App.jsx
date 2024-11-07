@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerSearch } from './components/PlayerSearch';
+import  PlayerSearch  from './components/PlayerSearch';
 import { PlayerCard }  from './components/PlayerCard';
 import { SeasonStats } from './components/SeasonStats';
 import './App.css';
@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="container">
-      <PlayerSearch onSearch={searchPlayer} />
+      <PlayerSearch onSearch={searchPlayer} className="search-container"/>
       {error && <p className="error">{error}</p>}
       {playerData && (
         <>

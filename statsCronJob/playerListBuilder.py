@@ -8,7 +8,7 @@ def build_player_list():
     data_list = nfl.import_weekly_data([2024])
     df = data_list
     for index, row in df.iterrows():
-        PLAYER_LIST.append((row['player_display_name'], row['position']))
+        PLAYER_LIST.append((row['player_display_name'],row['player_id'], row['position']))
     return PLAYER_LIST
 
 def save_player_list_to_file(file_path):

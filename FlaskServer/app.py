@@ -24,7 +24,6 @@ redis_client = redis.Redis(
     decode_responses=True  # Automatically decode responses to strings
 )
 
-
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
@@ -56,6 +55,31 @@ def get_player(player_name):
     except Exception as e:
         app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
+    
+def get_player_id(player_name):
+    return redis_client.get(f"player_name_to_player_id:{player_name}")
+
+
+@app.route('/player/<player_name>/id', methods=['GET'])
+def get_player_id(player_name):
+    return get_player_id(player_name)
+
+
+@app.route('/player/<player_name>/season', methods=['GET'])
+def get_player_season_stats(player_name):
+    player_id = get_player_id(player_name)
+    player_stats = redis_client.get(f"player_season_stats:{player_id}")
+    player_season_stats = json.loads(player_stats)['season_stats']
+    return jsonify(player_season_stats)
+    
+
+@app.route('/player/<player_name>/weekly', methods=['GET'])
+def get_player_weekly_stats(player_name):
+    player_id = get_player_id(player_name)
+    player_stats = redis_client.get(f"player_weekly_stats:{player_id}")
+    player_weekly_stats = json.loads(player_stats)['weekly_stats']
+    return jsonify(player_weekly_stats)
+
 
 @app.route('/players', methods=['GET'])
 def get_all_players():

@@ -1,3 +1,4 @@
+import lions from '../static/lions.jpg';
 export const colors = {
     "LAC": "#002244",
     "KC": "#E31837",
@@ -27,7 +28,13 @@ export const colors = {
     "ARI": "#97233F",
     "LAR": "#002244",
     "GB": "#203731",
-    "DET": "#005A5E",
+    "DET": "#006DB0",
     "MIN": "#4F2683",
     "CAR": "#0085CA",
+};
+function makeSVG(picture) {
+    return <img src={picture} alt="Team Logo" />
+}
+export const teamMapping = {
+"DET": lions
 };

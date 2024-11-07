@@ -10,3 +10,22 @@
   'receiving_first_downs': 1.0, 'receiving_epa': -0.6224504113197327, 'receiving_2pt_conversions': 0, 'racr': 0.7555555701255798, 
   'target_share': 0.2142857164144516, 'air_yards_share': 0.23076923191547394, 'wopr': 0.4829670190811157,
  'special_teams_tds': 0.0, 'fantasy_points': 3.4000000953674316, 'fantasy_points_ppr': 7.400000095367432}
+
+
+
+ seasonal statsConfig
+ ['player_id', 'season', 'season_type', 'completions', 'attempts',
+       'passing_yards', 'passing_tds', 'interceptions', 'sacks', 'sack_yards',
+       'sack_fumbles', 'sack_fumbles_lost', 'passing_air_yards',
+       'passing_yards_after_catch', 'passing_first_downs', 'passing_epa',
+       'passing_2pt_conversions', 'pacr', 'dakota', 'carries', 'rushing_yards',
+       'rushing_tds', 'rushing_fumbles', 'rushing_fumbles_lost',
+       'rushing_first_downs', 'rushing_epa', 'rushing_2pt_conversions',
+       'receptions', 'targets', 'receiving_yards', 'receiving_tds',
+       'receiving_fumbles', 'receiving_fumbles_lost', 'receiving_air_yards',
+       'receiving_yards_after_catch', 'receiving_first_downs', 'receiving_epa',
+       'receiving_2pt_conversions', 'racr', 'target_share', 'air_yards_share',
+       'wopr_x', 'special_teams_tds', 'fantasy_points', 'fantasy_points_ppr',
+       'games', 'tgt_sh', 'ay_sh', 'yac_sh', 'wopr_y', 'ry_sh', 'rtd_sh',
+       'rfd_sh', 'rtdfd_sh', 'dom', 'w8dom', 'yptmpa', 'ppr_sh'],
+      dtype='object')

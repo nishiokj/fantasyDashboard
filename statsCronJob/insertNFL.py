@@ -22,10 +22,12 @@ r = redis.Redis(
     password='6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
 
 def get_player_stats(player_list):
-    import json
 
-    data_list = nfl.import_weekly_data([2024])
-    df = data_list
+    weekly_data_list = nfl.import_weekly_data([2024])
+    df = weekly_data_list
+
+    season_data_list = nfl.import_seasonal_data([2024])
+    season_df = season_data_list
     """
     Extracts specific statistics for a list of players based on their positions.
 
@@ -38,35 +40,45 @@ def get_player_stats(player_list):
               containing the requested statistics.
     """
     stats = {}
-    for player_name, position in player_list:
+
+    for player_name, player_id, position  in player_list:
+
         # Filter the dataframe for the current player
-        player_df = df[df['player_display_name'] == player_name]
-        
-        if player_df.empty:
+        weekly_player_df = df[df['player_id'] == player_id]
+        season_player_df = season_df[season_df['player_id'] == player_id]
+        if weekly_player_df.empty:
             print(f"No data found for player: {player_name}")
             continue
-
+        if season_player_df.empty:
+            print(f"No season data found for player: {player_name}")
+            continue
         try:
             # Extract all available statistics for the player
-            player_stats = player_df.iloc[-1].to_dict()
+            weekly_player_stats = weekly_player_df.iloc[-1].to_dict()
+            season_player_stats = season_player_df.iloc[-1].to_dict()
 
-            for key, value in player_stats.items():
+            for key, value in weekly_player_stats.items():
                 if isinstance(value, float) and math.isnan(value):
-                    player_stats[key] = None
+                    weekly_player_stats[key] = None
+            for key, value in season_player_stats.items():
+                if isinstance(value, float) and math.isnan(value):
+                    season_player_stats[key] = None
             # Ensure all values are JSON serializable
-            for key, value in player_stats.items():
+            for key, value in weekly_player_stats.items():
                 if not isinstance(value, (str, int, float, bool, list, dict, type(None))):
                     continue
                     print(f"Non-serializable value: {value} for key: {key}")
 
-            stats[player_name] = player_stats
+            stats[player_id] = {"weekly": weekly_player_stats, "season": season_player_stats}
         except (TypeError, ValueError) as e:
             print(f"Serialization error for player '{player_name}': {e}")
             # Optionally, you can log the error or handle it as needed
             continue
 
     return stats
-
+def delete_player_stats():
+    r.delete("player_weekly_stats:*")
+    r.delete("player_season_stats:*")
 def main():
     PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
     try:
@@ -78,12 +90,12 @@ def main():
     # Store each player's stats as a separate JSON entry in Redis
     pipeline = r.pipeline()
     # print(stats['Drake London'])
-    for player, data in stats.items():
-        key = f"player_stats:{player}"
+    for player_id, data in stats.items():
+        key = f"player_stats:{player_id}"
         try:
             pipeline.set(key, json.dumps(data))
         except Exception as e:
-            print(f"Error setting data for player '{player}': {e}")
+            print(f"Error setting data for player '{player_id}': {e}")
     try:
         pipeline.execute()
         print("Player stats successfully updated in Redis.")

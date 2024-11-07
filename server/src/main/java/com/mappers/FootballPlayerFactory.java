@@ -16,8 +16,8 @@ public class FootballPlayerFactory {
         player.setPositionGroup(getStringValue(redisData, "position_group"));
         player.setHeadshotUrl(getStringValue(redisData, "headshot_url"));
         player.setRecentTeam(getStringValue(redisData, "recent_team"));
-        player.setSeason(getIntValue(redisData, "season"));
-        player.setWeek(getIntValue(redisData, "week"));
+        player.setSeason(getIntegerValue(redisData, "season"));
+        player.setWeek(getIntegerValue(redisData, "week"));
         player.setSeasonType(getStringValue(redisData, "season_type"));
         player.setOpponentTeam(getStringValue(redisData, "opponent_team"));
 

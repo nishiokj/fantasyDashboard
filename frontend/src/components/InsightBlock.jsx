@@ -1,30 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../InsightBlock.css'; // Ensure you're importing PropTypes
+import '../InsightBlock.css';
+import UsagePieChart from './UsagePieChart';
 
-const InsightBlock = ({ title, content, color }) => {
+const InsightBlock = ({ props }) => {
+  const {title,color, data } = props;
+  
+  const renderContent = () => {
+    if (title === "USAGE RENDS") {
+      return <UsagePieChart props={{
+        title: title,
+        color: color,
+        data: data
+      }} />;
+    }
+  }
+  console.log(data);
   return (
-    <div className="insight-block" style={{ borderColor: color,backgroundColor: color }}>
+    <div className="insight-block" style={{ borderColor: color, backgroundColor: color }}>
       <header className="insight-block-header" style={{ borderBottomColor: color, backgroundColor: color }}>
         {title}
       </header>
       <div className="insight-block-mask"></div>
       <div className="insight-block-content">
-        {/* Add your insight content here */}
-        Content for {title}
+        <UsagePieChart props={{
+            title: title,
+            color: color,
+            data: data
+        }} />
       </div>
     </div>
   );
 };
 
 InsightBlock.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  color: PropTypes.string
-};
-
-InsightBlock.defaultProps = {
-    color: '#ddd' // Default color if none is provided
+  props: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    color: PropTypes.string,
+    data: PropTypes.object
+  }).isRequired
 };
 
 export default InsightBlock;

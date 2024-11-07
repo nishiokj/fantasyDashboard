@@ -25,11 +25,11 @@ public interface FootballPlayer extends Player {
     void setRecentTeam(String recentTeam);
     
     // Game info
-    int getSeason();
-    void setSeason(int season);
+    Integer getSeason();
+    void setSeason(Integer season);
     
-    int getWeek();
-    void setWeek(int week);
+    Integer getWeek();
+    void setWeek(Integer week);
     
     String getSeasonType();
     void setSeasonType(String seasonType);
@@ -38,142 +38,142 @@ public interface FootballPlayer extends Player {
     void setOpponentTeam(String opponentTeam);
     
     // Passing stats
-    int getCompletions();
-    void setCompletions(int completions);
+    Integer getCompletions();
+    void setCompletions(Integer completions);
     
-    int getAttempts();
-    void setAttempts(int attempts);
+    Integer getAttempts();
+    void setAttempts(Integer attempts);
     
-    double getSacks();
-    void setSacks(double sacks);
+    Double getSacks();
+    void setSacks(Double sacks);
     
-    double getSackYards();
-    void setSackYards(double sackYards);
+    Double getSackYards();
+    void setSackYards(Double sackYards);
     
-    int getSackFumbles();
-    void setSackFumbles(int sackFumbles);
+    Integer getSackFumbles();
+    void setSackFumbles(Integer sackFumbles);
     
-    int getSackFumblesLost();
-    void setSackFumblesLost(int sackFumblesLost);
+    Integer getSackFumblesLost();
+    void setSackFumblesLost(Integer sackFumblesLost);
 
-    double getPassingYards();
-    void setPassingYards(double passingYards);
+    Double getPassingYards();
+    void setPassingYards(Double passingYards);
     
-    int getPassingTouchdowns();
-    void setPassingTouchdowns(int passingTouchdowns);
+    Integer getPassingTouchdowns();
+    void setPassingTouchdowns(Integer passingTouchdowns);
     
-    int getInterceptions();
-    void setInterceptions(int interceptions);
+    Integer getInterceptions();
+    void setInterceptions(Integer interceptions);
 
-    double getPassingYardsAfterCatch();
-    void setPassingYardsAfterCatch(double passingYardsAfterCatch);
+    Double getPassingYardsAfterCatch();
+    void setPassingYardsAfterCatch(Double passingYardsAfterCatch);
     
-    double getPassingAirYards();
-    void setPassingAirYards(double passingAirYards);
+    Double getPassingAirYards();
+    void setPassingAirYards(Double passingAirYards);
     
-    int getPassingFirstDowns();
-    void setPassingFirstDowns(int passingFirstDowns);
+    Integer getPassingFirstDowns();
+    void setPassingFirstDowns(Integer passingFirstDowns);
     
-    double getPassingEpa();
-    void setPassingEpa(double passingEpa);
+    Double getPassingEpa();
+    void setPassingEpa(Double passingEpa);
     
-    int getPassing2ptConversions();
-    void setPassing2ptConversions(int passing2ptConversions);
+    Integer getPassing2ptConversions();
+    void setPassing2ptConversions(Integer passing2ptConversions);
     
 
 
-    double getPacr();
-    void setPacr(double pacr);
+    Double getPacr();
+    void setPacr(Double pacr);
     
-    double getDakota();
-    void setDakota(double dakota);
+    Double getDakota();
+    void setDakota(Double dakota);
     
 
     // Rushing stats
-    int getCarries();
-    void setCarries(int carries);
+    Integer getCarries();
+    void setCarries(Integer carries);
     
-    int getRushingFirstDowns();
-    void setRushingFirstDowns(int rushingFirstDowns);
+    Integer getRushingFirstDowns();
+    void setRushingFirstDowns(Integer rushingFirstDowns);
     
-    double getRushingEpa();
-    void setRushingEpa(double rushingEpa);
+    Double getRushingEpa();
+    void setRushingEpa(Double rushingEpa);
     
-    int getRushing2ptConversions();
-    void setRushing2ptConversions(int rushing2ptConversions);
+    Integer getRushing2ptConversions();
+    void setRushing2ptConversions(Integer rushing2ptConversions);
     
-    int getRushingFumblesLost();
-    void setRushingFumblesLost(int rushingFumblesLost);
+    Integer getRushingFumblesLost();
+    void setRushingFumblesLost(Integer rushingFumblesLost);
 
-    double getRushingYards();
-    void setRushingYards(double rushingYards);
+    Double getRushingYards();
+    void setRushingYards(Double rushingYards);
 
-    int getRushingTouchdowns();
-    void setRushingTouchdowns(int rushingTouchdowns);
+    Integer getRushingTouchdowns();
+    void setRushingTouchdowns(Integer rushingTouchdowns);
 
-    int getRushingFumbles();
-    void setRushingFumbles(int rushingFumbles);
+    Integer getRushingFumbles();
+    void setRushingFumbles(Integer rushingFumbles);
 
-    int getReceptions();
-    void setReceptions(int receptions);
+    Integer getReceptions();
+    void setReceptions(Integer receptions);
     
-    int getTargets();
-    void setTargets(int targets);
+    Integer getTargets();
+    void setTargets(Integer targets);
     
     // Receiving stats
-    double getTargetShare();
-    void setTargetShare(double targetShare);
+    Double getTargetShare();
+    void setTargetShare(Double targetShare);
     
-    int getReceivingFumbles();
-    void setReceivingFumbles(int receivingFumbles);
+    Integer getReceivingFumbles();
+    void setReceivingFumbles(Integer receivingFumbles);
 
-    double getReceivingYards();
-    void setReceivingYards(double receivingYards);
+    Double getReceivingYards();
+    void setReceivingYards(Double receivingYards);
 
-    double getReceivingYardsAfterCatch();
-    void setReceivingYardsAfterCatch(double receivingYardsAfterCatch);
+    Double getReceivingYardsAfterCatch();
+    void setReceivingYardsAfterCatch(Double receivingYardsAfterCatch);
 
-    int getReceivingTouchdowns();
-    void setReceivingTouchdowns(int receivingTouchdowns);
+    Integer getReceivingTouchdowns();
+    void setReceivingTouchdowns(Integer receivingTouchdowns);
     
-    int getReceivingFumblesLost();
-    void setReceivingFumblesLost(int receivingFumblesLost);
+    Integer getReceivingFumblesLost();
+    void setReceivingFumblesLost(Integer receivingFumblesLost);
     
-    double getReceivingAirYards();
-    void setReceivingAirYards(double receivingAirYards);
+    Double getReceivingAirYards();
+    void setReceivingAirYards(Double receivingAirYards);
     
-    int getReceivingFirstDowns();
-    void setReceivingFirstDowns(int receivingFirstDowns);
+    Integer getReceivingFirstDowns();
+    void setReceivingFirstDowns(Integer receivingFirstDowns);
     
-    double getReceivingEpa();
-    void setReceivingEpa(double receivingEpa);
+    Double getReceivingEpa();
+    void setReceivingEpa(Double receivingEpa);
     
-    int getReceiving2ptConversions();
-    void setReceiving2ptConversions(int receiving2ptConversions);
+    Integer getReceiving2ptConversions();
+    void setReceiving2ptConversions(Integer receiving2ptConversions);
     
     //Kicking stats
-    int getExtraPointsMade();
-    void setExtraPointsMade(int extraPointsMade);
+    Integer getExtraPointsMade();
+    void setExtraPointsMade(Integer extraPointsMade);
 
-    int getExtraPointsAttempted();
-    void setExtraPointsAttempted(int extraPointsAttempted);
+    Integer getExtraPointsAttempted();
+    void setExtraPointsAttempted(Integer extraPointsAttempted);
 
     // Advanced metrics
-    double getRacr();
-    void setRacr(double racr);
+    Double getRacr();
+    void setRacr(Double racr);
     
-    double getAirYardsShare();
-    void setAirYardsShare(double airYardsShare);
+    Double getAirYardsShare();
+    void setAirYardsShare(Double airYardsShare);
     
-    double getWopr();
-    void setWopr(double wopr);
+    Double getWopr();
+    void setWopr(Double wopr);
     
-    double getSpecialTeamsTds();
-    void setSpecialTeamsTds(double specialTeamsTds);
+    Double getSpecialTeamsTds();
+    void setSpecialTeamsTds(Double specialTeamsTds);
 
-    double getFantasyPoints();
-    void setFantasyPoints(double fantasyPoints);
+    Double getFantasyPoints();
+    void setFantasyPoints(Double fantasyPoints);
 
-    double getFantasyPointsPPR();
-    void setFantasyPointsPPR(double fantasyPointsPPR);
+    Double getFantasyPointsPPR();
+    void setFantasyPointsPPR(Double fantasyPointsPPR);
 }
