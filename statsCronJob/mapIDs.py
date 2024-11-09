@@ -4,11 +4,11 @@ import math
 import pickle
 import json
 import redis
-
+import os
 r = redis.Redis(
     host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
     port=11531,
-    password='6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
+    password=os.getenv('STATS_CACHE_KEY'))
 
 
 def map_id_to_player(player_list):

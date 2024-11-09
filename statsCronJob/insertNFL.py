@@ -19,7 +19,7 @@ os.environ['REQUESTS_CA_BUNDLE'] = cert_path
 r = redis.Redis(
     host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
     port=11531,
-    password='6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
+    password=os.getenv('STATS_CACHE_KEY'))
 
 def get_player_stats(player_list):
 
