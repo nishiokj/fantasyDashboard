@@ -9,8 +9,8 @@
     "@mui/material": "^6.1.6",
     "@mui/x-charts": "^7.22.1",
     "mui": "^0.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "react-google-charts": "^5.2.1",
     "recharts": "^2.13.3"
   },

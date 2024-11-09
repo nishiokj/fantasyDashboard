@@ -10,11 +10,14 @@
   overflow: auto;
   align-items: center;
 }
+
+
 .search-container {
   margin: 0vw 0;
   align-items: center;
   width: 100%;
 }
+
 
 .search-container form {
   display: flex;
@@ -22,16 +25,19 @@
   
 }
 
+
 .search-container input {
   padding: 0.5vw;
   flex: 1;
 
+
   background-color: #f7f7f7;
 }
 
+
 .search-container button {
   padding: 0.5vw 1vw;
-  background-color: #007bff;
+  background-color: #000000;
   color: white;
   border: none;
   cursor: pointer;
@@ -45,6 +51,7 @@
   text-align: center;
   margin: 20px 0;
 }
+
 
 html, body {
   height: 100%;

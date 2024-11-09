@@ -11,12 +11,10 @@ export const DataCard = ({ props }) => {
     <div className="data-card" style={{ borderColor: borderColor }}>
      
       <div className="data-card-mask"></div>
-      <div className="data-card-header" style={{ borderBottomColor: borderColor, backgroundColor: borderColor }}>
-        {header}
-      </div>
+
       <div className="insight-blocks">
         <InsightBlock props={{
-          title: insight_mapping['Insight1'],
+          title: insight_mapping[header],
           color: borderColor,
           data: data,
         
@@ -30,11 +28,6 @@ export const DataCard = ({ props }) => {
 DataCard.propTypes = {
   props: PropTypes.shape({
     header: PropTypes.string.isRequired,
-    insight_mapping: PropTypes.shape({
-      Insight1: PropTypes.string,
-      Insight2: PropTypes.string,
-      Insight3: PropTypes.string
-    }).isRequired,
     borderColor: PropTypes.string,
     data: PropTypes.object
   }).isRequired

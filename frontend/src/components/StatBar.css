@@ -1,0 +1,26 @@
+.stat-bar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 4vw;
+}
+.stat-item div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+.stat-bar h3 {
+    font-size: 1vw;
+    font-weight: semi-bold;
+    color: #b8a8a8;
+    padding: 0vw;
+    padding-left: 0vw;
+    margin: 0vw;
+}
+.stat-bar p {
+    font-size: 2vw;
+    font-weight: semi-bold;
+    color: #ffffff;
+    margin: 0vw;
+}

@@ -2,7 +2,6 @@
 
 .data-card {
   font-family: 'Orbitron', sans-serif;
-  width: 100%; /* Adjust to match the PlayerCard's width */
   border-radius: 0.5vw;
   overflow: auto;
   display: flex;
@@ -11,8 +10,10 @@
   margin-bottom: 0vw; /* Space between DataCards */
   border-top-left-radius: 1vw;
   border-top-right-radius: 1vw;
-  gap: 1vw;
   max-width: 1000px;
+  width: calc((100% - .5vw) / 2);
+  padding-top: .5vw;
+
 }
 
 .data-card-header {

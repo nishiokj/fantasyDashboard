@@ -37,13 +37,14 @@ const Search = styled('form')(({ theme }) => ({
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
   marginTop: '1vw',
   marginBottom: '.5vw',
-  fontFamily: 'Orbitron',
-  backgroundColor: '#',
+  backgroundColor: '#000000',
   width: '100%',
   maxWidth: '1000px',
+  borderRadius: '1vw',
 }));
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontFamily: 'Orbitron',
+  fontWeight: 'bold',
 }));
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),

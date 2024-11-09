@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-
 app = Flask(__name__)
 CORS(app)
 
@@ -55,7 +54,8 @@ def get_player(player_name):
     except Exception as e:
         app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
-    
+
+
 def get_player_id(player_name):
     return redis_client.get(f"player_name_to_player_id:{player_name}")
 
@@ -98,6 +98,12 @@ def get_all_players():
     except Exception as e:
         app.logger.error(f"Error fetching players: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     # Get port from environment variable or default to 5000

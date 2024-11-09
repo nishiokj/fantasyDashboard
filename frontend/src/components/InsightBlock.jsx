@@ -7,7 +7,7 @@ const InsightBlock = ({ props }) => {
   const {title,color, data } = props;
   
   const renderContent = () => {
-    if (title === "USAGE RENDS") {
+    if (title === "RECENT USAGE") {
       return <UsagePieChart props={{
         title: title,
         color: color,
@@ -23,11 +23,7 @@ const InsightBlock = ({ props }) => {
       </header>
       <div className="insight-block-mask"></div>
       <div className="insight-block-content">
-        <UsagePieChart props={{
-            title: title,
-            color: color,
-            data: data
-        }} />
+        {renderContent()}
       </div>
     </div>
   );

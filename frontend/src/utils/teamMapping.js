@@ -32,9 +32,8 @@ export const colors = {
     "MIN": "#4F2683",
     "CAR": "#0085CA",
 };
-function makeSVG(picture) {
-    return <img src={picture} alt="Team Logo" />
-}
+
+
 export const teamMapping = {
 "DET": lions
 };

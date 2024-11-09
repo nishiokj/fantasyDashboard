@@ -5,25 +5,27 @@ import { headerMapping } from '../utils/headerMapping';
 import { colors, teamMapping } from '../utils/teamMapping';
 import '../PlayerCard.css';
 import SportsFootballOutlinedIcon from '@mui/icons-material/SportsFootballOutlined';
-
+import StatBar from './StatBar';
 export function PlayerCard({ player }) {
   return (
     <div
       className="player-card"
       style={{
-        borderColor: colors[player.recent_team],
-        backgroundColor: colors[player.recent_team],
+        borderColor: '#0000000',
+        backgroundColor: '#000000',
         position: 'relative',
       }}
     >
       {/* Overlay Mask */}
       <div className="player-card-mask"></div>
 
-      <div className="player-header">
+      <div className="header" style={{backgroundColor: colors[player.recent_team]}}>
         <img
           src={player.headshot_url}
           alt={`${player.player_display_name.toUpperCase()} Headshot`}
-          style={{ borderColor: colors[player.recent_team] }}
+          style={{ borderColor: colors[player.recent_team],
+            
+           }}
         />
         <div className="player-info"> 
           <h2>{player.player_display_name.toUpperCase()}
@@ -31,36 +33,28 @@ export function PlayerCard({ player }) {
               <SportsFootballOutlinedIcon />
             </div>
           </h2>
-        
-          <div className="info-columns" >
-            <h3>Pos</h3>
-            <p className="info-column" style={{ borderColor: colors[player.recent_team] }}>{player.position}</p>
-            <h3>PPG</h3>
-            <p className="info-column" style={{ borderColor: colors[player.recent_team] }}>{player.fantasy_points_ppr.toFixed(1) || player.fantasy_points.toFixed(1) || 0}</p>
-            <h3>Team</h3>
-            <p className="info-column" style={{ borderColor: colors[player.recent_team] }}>{player.recent_team}</p>
-          </div>
+          <StatBar props={{
+            values: {
+                "Pos": player.position,
+                "PPG": player.fantasy_points_ppr.toFixed(1) || player.fantasy_points.toFixed(1) || 0,
+                "Team": player.recent_team
+            },
+            paddingTop: "0vw"
+          }}/>
+
         </div>
       </div>
       <div className="data-cards-container">
-        <DataCard props={{
-          header: "Matchup",
-          insight_mapping: headerMapping['Matchup'],
-          borderColor: colors[player.recent_team],
-          data: player
-        }}/>
-        <DataCard props={{
-          header: "Season Insights",
-          insight_mapping: headerMapping['Season Insights'],
-          borderColor: colors[player.recent_team],
-          data: player
-        }}/>
-        <DataCard props={{
-          header: "Game Logs",
-          insight_mapping: headerMapping['Game Logs'],
-          borderColor: colors[player.recent_team],
-          data: player
-        }}/>
+        {Object.keys(headerMapping).map((key) => (
+          Object.keys(headerMapping[key]).map((subkey) => (
+            <DataCard props={{
+              header: subkey,
+            insight_mapping: headerMapping[key],
+            borderColor: colors[player.recent_team],
+            data: player
+            }}/>
+          ))
+        ))}
 
       </div>
     </div>

@@ -3,7 +3,6 @@
 .player-card {
   font-family: 'Orbitron', sans-serif;
   width: 100%; /* Adjust as needed */
-  border: 0.3vw solid #000; /* Temporary border color, overridden by inline styles */
   border-radius: .5vw;
   margin-left: .2vw;
   margin-right: .2vw;
@@ -15,58 +14,34 @@
   font-size: 1.5vw;
   font-weight: semi-bold;
   max-width: 1000px;
-  justify-content: center;
-}
-.MuiBox-root css-i9gxme{
-    height: auto;
-
-}
-.player-card-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.05); /* Light mask with 25% opacity */
-  pointer-events: none; /* Allow interactions with underlying content */
-  z-index: 1; /* Ensure the mask is below the content */
 }
 
-.player-header {
+
+.header {
   display: flex;
   align-items: center;
   padding-top: 2.5vw;
-  padding-left: 1.5vw;
+  padding-left: 1vw;
   height: auto;
   z-index: 2; /* Ensure content is above the mask */
   font-size: 1.5vw;
   color: white; /* Set font color to white */
-  margin-bottom: 1vw;
-  border-bottom: 0.3vw solid #0a0909;
-  border-radius: 3vw;
+  border-radius: 2vw;
+  
 }
 
-.player-header img {
+.header img {
   width: 24vw;
   height: 16vw;
   border-radius: 10%;
   /* Border color is set inline */
   margin-right: 0vw;
-
-}
-
-.player-info {
-    
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 }
 
 .player-info h2 {
     height: 100%;
   margin-bottom: 0vw;
   font-size: 3vw;
-  gap: 0vw;
   display: flex;
   padding-bottom: 0.1vw;
   text-shadow: 0 .1vw .005vw rgba(0, 0, 0, 0.5); /* Added subtle shadow for a gamified look */
@@ -79,7 +54,7 @@
     justify-content: left;
     font-size: 1vw;
     color: rgb(179, 171, 171);
-    padding-left: .4vw;
+    padding-left: .5vw;
     padding-top: .2vw;
     padding-right: .1vw;
   }
@@ -104,7 +79,8 @@
 }
 
 .player-info .info-column {
-  padding: .5vw;
+  padding-left: .5vw;
+  padding-right: 1vw;
   box-sizing: border-box;
   font-weight: semi-bold;
 
@@ -120,9 +96,10 @@
 
 .data-cards-container {
   display: flex;
-  flex-direction: column;
-  padding: 1vw;
-  gap: 0vw; /* Space between DataCards */
+  flex-direction: row;
+  max-width: 1000px;
+  flex-wrap: wrap;
   box-sizing: border-box;
   z-index: 2; /* Ensure content is above the mask */
+  gap: .5%;
 }
