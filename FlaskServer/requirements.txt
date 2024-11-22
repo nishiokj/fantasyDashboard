@@ -1,0 +1,11 @@
+async-timeout==5.0.0
+blinker==1.8.2
+click==8.1.7
+Flask==2.3.3
+Flask-Cors==4.0.0
+itsdangerous==2.2.0
+Jinja2==3.1.4
+MarkupSafe==3.0.2
+python-dotenv==1.0.0
+redis==4.5.1
+Werkzeug==2.3.7

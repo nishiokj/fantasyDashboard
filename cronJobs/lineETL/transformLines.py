@@ -202,7 +202,7 @@ class PlayerData:
 def make_map_player_name_to_id_and_position():
     player_map = {}
     try:
-        player_list = pickle.load(open('./data/player_list.pkl', 'rb'))
+        player_list = pickle.load(open('./player_list.pkl', 'rb'))
         for player in player_list:
             player_map[player[0]] = (player[1], player[2])
     except Exception as e:
@@ -240,8 +240,8 @@ def main(player_lines,player_map):
 
 
 if __name__ == "__main__":
-    lines = read_from_file("./data/player_lines.json")
+    lines = read_from_file("./player_lines.json")
     player_map = make_map_player_name_to_id_and_position()
     player_dict = main(lines,player_map)
-    write_to_file(player_dict, "./data/player_data.json")
+    write_to_file(player_dict, "./player_data.json")
     print("Player data written to file")

@@ -17,8 +17,8 @@ os.environ['REQUESTS_CA_BUNDLE'] = cert_path
 # ssl._create_default_https_context = ssl._create_unverified_context
 
 r = redis.Redis(
-    host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
-    port=11531,
+    host=os.getenv('REDIS_HOST', 'redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com'),
+    port=os.getenv('REDIS_PORT', 11531),
     password=os.getenv('STATS_CACHE_KEY'))
 
 def get_player_stats(player_list):
@@ -76,9 +76,11 @@ def get_player_stats(player_list):
             continue
 
     return stats
+
 def delete_player_stats():
     r.delete("player_weekly_stats:*")
     r.delete("player_season_stats:*")
+
 def main():
     PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
     try:

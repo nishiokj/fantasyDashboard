@@ -25,3 +25,4 @@ if __name__ == "__main__":
     print(eventIds)
     writeToFile(eventIds, "eventIds.json")
     print("Event IDs written to file")
+    

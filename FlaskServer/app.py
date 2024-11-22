@@ -8,26 +8,41 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 app = Flask(__name__)
-CORS(app)
+
+# Configure CORS to allow requests from localhost:3000
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Redis configuration
 REDIS_HOST = os.getenv('REDIS_HOST', 'redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com')
 REDIS_PORT = int(os.getenv('REDIS_PORT', 11531))
-REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', '6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
+REDIS_PASSWORD = os.getenv('STATS_CACHE_KEY', '6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
+
 
 # Initialize Redis client
-redis_client = redis.Redis(
+redis_stats_client = redis.Redis(
     host=REDIS_HOST,
     port=REDIS_PORT,
     password=REDIS_PASSWORD,
     decode_responses=True  # Automatically decode responses to strings
 )
 
+
+REDIS_LINES_PASSWORD = os.getenv('BETTING_CACHE_KEY')
+REDIS_LINES_HOST = os.getenv('REDIS_LINES_HOST', 'redis-15731.c93.us-east-1-3.ec2.redns.redis-cloud.com')
+REDIS_LINES_PORT = int(os.getenv('REDIS_LINES_PORT', 15731))
+
+redis_lines_client = redis.Redis(
+    host=REDIS_LINES_HOST,
+    port=REDIS_LINES_PORT,
+    password=REDIS_LINES_PASSWORD,
+ # Automatically decode responses to strings
+)
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint"""
     try:
-        redis_client.ping()
+        redis_stats_client.ping()
         return jsonify({'status': 'healthy', 'redis': 'connected'})
     except redis.ConnectionError:
         return jsonify({'status': 'unhealthy', 'redis': 'disconnected'}), 503
@@ -38,7 +53,7 @@ def get_player(player_name):
     """Get player stats by name"""
     try:
         # Try to get player stats from Redis
-        player_stats = redis_client.get(f'player_stats:{player_name}')
+        player_stats = redis_stats_client.get(f'player_stats:{player_name}')
         
         if player_stats:
             return jsonify(json.loads(player_stats))
@@ -56,29 +71,38 @@ def get_player(player_name):
         return jsonify({'error': 'Internal server error'}), 500
 
 
-def get_player_id(player_name):
-    return redis_client.get(f"player_name_to_player_id:{player_name}")
+def get_player_id_by_name(player_name):
+    return json.loads(redis_stats_client.get(f"player_name_to_player_id:{player_name}"))
 
 
 @app.route('/player/<player_name>/id', methods=['GET'])
 def get_player_id(player_name):
-    return get_player_id(player_name)
+    return get_player_id_by_name(player_name)
 
 
 @app.route('/player/<player_name>/season', methods=['GET'])
 def get_player_season_stats(player_name):
-    player_id = get_player_id(player_name)
-    player_stats = redis_client.get(f"player_season_stats:{player_id}")
+    player_id = get_player_id_by_name(player_name)
+    player_stats = redis_stats_client.get(f"player_season_stats:{player_id}")
     player_season_stats = json.loads(player_stats)['season_stats']
     return jsonify(player_season_stats)
     
 
 @app.route('/player/<player_name>/weekly', methods=['GET'])
 def get_player_weekly_stats(player_name):
-    player_id = get_player_id(player_name)
-    player_stats = redis_client.get(f"player_weekly_stats:{player_id}")
+    player_id = get_player_id_by_name(player_name)
+    player_stats = redis_stats_client.get(f"player_weekly_stats:{player_id}")
     player_weekly_stats = json.loads(player_stats)['weekly_stats']
     return jsonify(player_weekly_stats)
+
+
+@app.route('/player/<player_name>/lines', methods=['GET'])
+def get_player_lines(player_name):
+    print(player_name)
+    player_id = get_player_id_by_name(player_name)
+    print(player_id)
+    player_lines = redis_lines_client.get(f"player_lines:{player_id}")
+    return jsonify(json.loads(player_lines))
 
 
 @app.route('/players', methods=['GET'])
@@ -86,11 +110,11 @@ def get_all_players():
     """Get all players"""
     try:
         # Get all keys matching the pattern
-        keys = redis_client.keys('player_stats:*')
+        keys = redis_stats_client.keys('player_stats:*')
         players = []
         
         for key in keys:
-            player_data = redis_client.get(key)
+            player_data = redis_stats_client.get(key)
             if player_data:
                 players.append(json.loads(player_data))
         

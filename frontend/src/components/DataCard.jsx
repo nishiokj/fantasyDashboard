@@ -5,7 +5,7 @@ import InsightBlock from './InsightBlock';
 import '../DataCard.css'; // Assuming you have a CSS file for styling
 
 export const DataCard = ({ props }) => {
-  const { header, insight_mapping, borderColor, data } = props;
+  const { header, insight_mapping, borderColor, player } = props;
 
   return (
     <div className="data-card" style={{ borderColor: borderColor }}>
@@ -16,7 +16,7 @@ export const DataCard = ({ props }) => {
         <InsightBlock props={{
           title: insight_mapping[header],
           color: borderColor,
-          data: data,
+          player: player,
         
         }}/>
         
@@ -29,7 +29,7 @@ DataCard.propTypes = {
   props: PropTypes.shape({
     header: PropTypes.string.isRequired,
     borderColor: PropTypes.string,
-    data: PropTypes.object
+    player: PropTypes.object
   }).isRequired
 };
 

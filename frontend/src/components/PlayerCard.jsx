@@ -6,9 +6,13 @@ import { colors, teamMapping } from '../utils/teamMapping';
 import '../PlayerCard.css';
 import SportsFootballOutlinedIcon from '@mui/icons-material/SportsFootballOutlined';
 import StatBar from './StatBar';
+import { ProjectionProvider } from './ProjectionContext';
+
+
 export function PlayerCard({ player }) {
   return (
-    <div
+    <ProjectionProvider playerName={player.player_display_name}>
+      <div
       className="player-card"
       style={{
         borderColor: '#0000000',
@@ -51,13 +55,14 @@ export function PlayerCard({ player }) {
               header: subkey,
             insight_mapping: headerMapping[key],
             borderColor: colors[player.recent_team],
-            data: player
+            player: player
             }}/>
           ))
         ))}
 
       </div>
     </div>
+    </ProjectionProvider>
   );
 }
 

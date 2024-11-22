@@ -11,6 +11,7 @@ import './StatBar.css';
  */
 export default function StatBar({ props }) {
     const { values, paddingTop } = props;
+    console.log(values);
     return (
         <div className="stat-bar" style={{padding: paddingTop}}>
             {Object.keys(values).map((columnName) => (
