@@ -111,7 +111,7 @@ export default function UsagePieChart({ props }) {
   }
 
   return (
-    <div className="usage-pie-chart" >
+    <div  >
       <ResponsiveContainer width="100%" height="auto" >
       <Chart
         chartType="PieChart"

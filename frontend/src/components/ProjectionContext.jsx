@@ -13,7 +13,7 @@ export const ProjectionProvider = ({ children, playerName }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log("useEffect triggered with playerName:", playerName);
 
     if (!playerName) {
@@ -42,7 +42,7 @@ export const ProjectionProvider = ({ children, playerName }) => {
     };
 
     fetchProjectionData();
-  }, []);
+  }, [playerName]);
 
   return (
     <ProjectionContext.Provider value={{ projectionData, loading, error }}>

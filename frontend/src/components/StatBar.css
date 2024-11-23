@@ -24,3 +24,10 @@
     color: #ffffff;
     margin: 0vw;
 }
+
+.insight-block-content .stat-bar {
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}

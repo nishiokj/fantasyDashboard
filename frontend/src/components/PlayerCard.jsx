@@ -8,7 +8,6 @@ import SportsFootballOutlinedIcon from '@mui/icons-material/SportsFootballOutlin
 import StatBar from './StatBar';
 import { ProjectionProvider } from './ProjectionContext';
 
-
 export function PlayerCard({ player }) {
   return (
     <ProjectionProvider playerName={player.player_display_name}>

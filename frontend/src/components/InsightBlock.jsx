@@ -4,6 +4,7 @@ import '../InsightBlock.css';
 import UsagePieChart from './UsagePieChart';
 import StatBar from './StatBar';
 import { ProjectionContext } from './ProjectionContext';
+import { useContext } from 'react';
 /**
  * InsightBlock Component
  * 
@@ -13,7 +14,7 @@ import { ProjectionContext } from './ProjectionContext';
  */
 const InsightBlock = ({ props }) => {
   const { title, color, player: initialData, position } = props;
-  const { projectionData } = React.useContext(ProjectionContext);
+
 
   /**
    * Renders the appropriate content based on the title.
@@ -27,21 +28,61 @@ const InsightBlock = ({ props }) => {
             color: color,
             data: initialData,
           }}
+          
         />
       );
     }
 
     if (title === "VEGAS PROJECTIONS") {
+
+      const { projectionData, loading, error } = useContext(ProjectionContext);
+      if (loading) {
+        return <div>Loading data...</div>;
+      }
+      
+      if (error) {
+        return <div>Error loading data: {error.message}</div>;
+      }
+      const shortenedTitles = {
+        "anytime_td": "TD",
+        "interceptions": "INTS",
+        "passing_tds": "PASS TDS",
+        "passing_yards": "PASS YDS",
+        "rushing_tds": "RUSH TD",
+        "rushing_yards": "RUSH YDS",
+        "receiving_tds": "REC TD",
+        "receiving_yards": "REC YDS",
+        "PPRProjection": "PPR PTS"
+      }
       console.log(projectionData);
       // Assuming you have a specific component or handling for VEGAS PROJECTIONS
+      const entries = Object.entries(projectionData['projections']);
+      const [topRow, bottomRow] = entries.reduce((acc, [stat, projection], index) => {
+        const shortenedStat = shortenedTitles[stat] || stat;
+
+        acc[index <= 2 ? 0 : 1][shortenedStat] = projection;
+        return acc;
+      }, [{}, {}]);
       return (
-        <StatBar
+        <div className="projection-block">
+        <StatBar 
           props={{
-            values: projectionData['projections'],
+              values: topRow,
             title: title,
             color: color,
+        
           }}
         />
+
+        <StatBar
+        props = {{
+          values: bottomRow,
+          title: title,
+          color: color,
+  
+          }}
+          />
+        </div>
       );
     }
 
