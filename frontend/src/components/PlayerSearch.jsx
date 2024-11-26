@@ -92,7 +92,7 @@ export default function PlayerSearch({ onSearch }) {
     const handleSubmit = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      onSearch(searchTerm);
+      onSearch(cleanSearchTerm(searchTerm));
     }
   };
 
@@ -108,6 +108,12 @@ export default function PlayerSearch({ onSearch }) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const cleanSearchTerm = (term) => {
+    const words = term.split(' ');
+    const capitalizedWords = words.map(word => word[0].toUpperCase() + word.slice(1));
+    return capitalizedWords.join(' ');
+  }
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (

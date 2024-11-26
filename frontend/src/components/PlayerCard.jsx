@@ -31,10 +31,10 @@ export function PlayerCard({ player }) {
            }}
         />
         <div className="player-info"> 
-          <h2>{player.player_display_name.toUpperCase()}
-            <div className="player-name-icon">
+          <h2><div className="player-name-text">{player.player_display_name.toUpperCase()}</div>
+            {/* <div className="player-name-icon">
               <SportsFootballOutlinedIcon />
-            </div>
+            </div> */}
           </h2>
           <StatBar props={{
             values: {

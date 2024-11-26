@@ -52,13 +52,18 @@ const InsightBlock = ({ props }) => {
         "rushing_yards": "RUSH YDS",
         "receiving_tds": "REC TD",
         "receiving_yards": "REC YDS",
-        "PPRProjection": "PPR PTS"
+        "PPRProjection": "PPR"
       }
       console.log(projectionData);
       // Assuming you have a specific component or handling for VEGAS PROJECTIONS
       const entries = Object.entries(projectionData['projections']);
       const [topRow, bottomRow] = entries.reduce((acc, [stat, projection], index) => {
         const shortenedStat = shortenedTitles[stat] || stat;
+        if (stat == "anytime_td") {
+          if (projection > 0) {
+            projection = "+".concat(projection.toString());
+          } 
+        }
 
         acc[index <= 2 ? 0 : 1][shortenedStat] = projection;
         return acc;

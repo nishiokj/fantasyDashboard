@@ -21,7 +21,7 @@ export default function UsagePieChart({ props }) {
     let labelSecondary;
     let usageValue;
     let graph;
-
+    let passAttempts;
     switch (data["position"]) {
       case "QB":
         labelPrimary = "Passes";
@@ -36,25 +36,30 @@ export default function UsagePieChart({ props }) {
         break;
 
       case "RB":
-        labelPrimary = "Carries";
-        labelSecondary = "Run Plays";
-        usageValue = [data["carries"], data["runPlays"] - data["carries"]];
+        labelPrimary = "Targets";
+        labelSecondary = "Pass Attempts";
+        usageValue = (data['target_share'].toFixed(2) * 100);
+        passAttempts = data["targets"] / data["target_share"];
+        console.log("passAttempts", passAttempts);
         graph = [
-          { name: labelPrimary, value: data["carries"] },
-          { name: labelSecondary, value: data["runPlays"] - data["carries"] },
+          ['Play Type', 'Snaps'],
+          ["Non-Targets", passAttempts - data["targets"]],
+          ["Targets", data["targets"]]
         ];
         break;
-
+      case "TE":
       case "WR":
         labelPrimary = "Targets";
         labelSecondary = "Pass Attempts";
-        usageValue = [data["targets"], data["passAttempts"] - data["targets"]];
+        usageValue = (data['target_share'].toFixed(2) * 100);
+        passAttempts = data["targets"] / data["target_share"];
+        console.log("passAttempts", passAttempts);
         graph = [
-          { name: labelPrimary, value: data["targets"] },
-          { name: labelSecondary, value: data["passAttempts"] - data["targets"] },
+          ['Play Type', 'Snaps'],
+          ["Non-Targets", passAttempts - data["targets"]],
+          ["Targets", data["targets"]]
         ];
         break;
-
       case "K":
         labelPrimary = "Attempts";
         labelSecondary = "Remaining";
