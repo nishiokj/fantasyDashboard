@@ -5,10 +5,13 @@ import pickle
 import json
 import redis
 import os
+import dotenv
+dotenv.load_dotenv()
 r = redis.Redis(
-    host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
-    port=11531,
-    password=os.getenv('STATS_CACHE_KEY'))
+    host=os.getenv('WEEKLY_URL'),
+    port=os.getenv('WEEKLY_PORT'),
+    password=os.getenv('WEEKLY_CACHE_KEY'))
+
 
 
 def map_id_to_player(player_list):
@@ -26,7 +29,6 @@ def main():
     PLAYER_LIST = pickle.load(open('player_list.pkl', 'rb'))
     try:
         map = map_id_to_player(PLAYER_LIST)
-        print(map)
     except Exception as e:
         print(f"An unexpected error occurred get player stats: {e}")
     pipeline = r.pipeline()

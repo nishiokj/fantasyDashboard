@@ -4,18 +4,19 @@ import redis
 import json
 import os
 from dotenv import load_dotenv
+from espn_api.football import League
 
 # Load environment variables
 load_dotenv()
 app = Flask(__name__)
 
 # Configure CORS to allow requests from localhost:3000
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3001"}})
 
 # Redis configuration
-REDIS_HOST = os.getenv('REDIS_HOST', 'redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com')
-REDIS_PORT = int(os.getenv('REDIS_PORT', 11531))
-REDIS_PASSWORD = os.getenv('STATS_CACHE_KEY', '6YlddKvp2Dtwg7I97jMeCOk3Pu8bcKjA')
+REDIS_HOST = os.getenv('WEEKLY_URL')
+REDIS_PORT = int(os.getenv('WEEKLY_PORT'))
+REDIS_PASSWORD = os.getenv('WEEKLY_CACHE_KEY')
 
 
 # Initialize Redis client
@@ -27,9 +28,9 @@ redis_stats_client = redis.Redis(
 )
 
 
-REDIS_LINES_PASSWORD = os.getenv('BETTING_CACHE_KEY')
-REDIS_LINES_HOST = os.getenv('REDIS_LINES_HOST', 'redis-15731.c93.us-east-1-3.ec2.redns.redis-cloud.com')
-REDIS_LINES_PORT = int(os.getenv('REDIS_LINES_PORT', 15731))
+REDIS_LINES_PASSWORD = os.getenv('BETTING_LINES_CACHE_KEY')
+REDIS_LINES_HOST = os.getenv('BETTING_LINES_URL', 'redis-10594.c270.us-east-1-3.ec2.redns.redis-cloud.com')
+REDIS_LINES_PORT = int(os.getenv('BETTING_LINES_PORT', 10594))
 
 redis_lines_client = redis.Redis(
     host=REDIS_LINES_HOST,
@@ -52,8 +53,9 @@ def health_check():
 def get_player(player_name):
     """Get player stats by name"""
     try:
+        id = get_player_id_by_name(player_name)
         # Try to get player stats from Redis
-        player_stats = redis_stats_client.get(f'player_stats:{player_name}')
+        player_stats = redis_stats_client.get(f'player_stats:{id}')
         
         if player_stats:
             return jsonify(json.loads(player_stats))
@@ -66,6 +68,34 @@ def get_player(player_name):
     except json.JSONDecodeError as e:
         app.logger.error(f"JSON decode error: {str(e)}")
         return jsonify({'error': 'Data format error'}), 500
+    except Exception as e:
+        app.logger.error(f"Unexpected error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.route('/fantasy/<league_id>', methods=['GET'])
+def get_fantasy_league(league_id):
+    try:
+        league = League(league_id, year=2024)
+        print(league.teams)
+        return_teams = {}
+        for team in league.teams:
+            return_teams[team.team_id] = team.team_name
+        return jsonify(return_teams)
+    except Exception as e:
+        app.logger.error(f"Unexpected error: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@app.route('/fantasy/<league_id>/roster/<team_id>', methods=['GET'])
+def get_fantasy_roster_by_team_id(league_id, team_id):
+    try:
+        league = League(league_id, year=2024)
+        roster = league.teams[int(team_id)-1].roster
+        return_roster = {}
+        for player in roster:
+            return_roster[player.playerId] = player.name
+        return jsonify(return_roster)
     except Exception as e:
         app.logger.error(f"Unexpected error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500

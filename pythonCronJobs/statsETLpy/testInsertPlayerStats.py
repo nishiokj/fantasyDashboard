@@ -1,11 +1,13 @@
 import redis
 import json
 import os
+import dotenv
+dotenv.load_dotenv()
 # Connect to Redis
 r = redis.Redis(
-    host='redis-11531.c73.us-east-1-2.ec2.redns.redis-cloud.com',
-    port=11531,
-    password=os.getenv('STATS_CACHE_KEY'))
+    host=os.getenv('WEEKLY_URL'),
+    port=os.getenv('WEEKLY_PORT'),
+    password=os.getenv('WEEKLY_CACHE_KEY'))
 
 def test_player_stats_insertion():
     players = ["Drake London", "Malik Nabers", "Justin Jefferson"]

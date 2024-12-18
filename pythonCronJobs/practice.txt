@@ -1,0 +1,105 @@
+
+# Common mistakes when exiting normal mode:
+
+# INCORRECT: Using jk when vim.enable is false
+# 1. Press Escape key
+# 2. Use jk if vim.enable is true and insertModeKeyBindings are configured
+
+# To fix:
+# 1. Open settings.json
+# 2. Set "vim.enable": true
+# 3. Verify insertModeKeyBindings includes:
+#    {
+#        "before": ["j", "k"],
+#        "after": ["<Esc>"]
+L#    }
+
+# Practice exiting insert mode below:
+# 1. Press 'i' to enter insert mode
+# 2. Type some text
+# 3. Press 'jk' or Escape to exit to normal mode
+
+Thought about Neovim mappings readability for a couple of seconds
+Below is a more understandable, plain-English explanation of the listed mappings. Each entry shows what keystroke you press in Normal mode, and what action it performs. Where possible, I’ve replaced the internal Neovim or extension-specific commands with a description of what they do in simpler terms. If something calls a special function that’s unique to your setup, I’ll describe what it seems to do based on the name and context.
+
+Note: All of these mappings are for Normal mode.
+
+Basic Navigation & Editor Actions
+
+<Tab>: Jump forward through the jump list (like pressing <C-I>).
+K: Show a hover tooltip (like “show documentation” in an IDE).
+H: Move the cursor to the top of the screen.
+M: Move the cursor to the middle of the screen.
+L: Move the cursor to the bottom of the screen.
+Scrolling Within Wrapped Lines
+gj: Move the cursor down to the next line on screen (rather than the next actual line in the file). If your line is wrapped, this moves within that wrapped line.
+gk: Move the cursor up to the previous screen line.
+Moving Between Editor Groups (VSCode Panels)
+
+gt: Move to the next editor group.
+gT: Move to the previous editor group.
+Go to Definitions & References (VSCode Integration)
+
+gd: Go to the definition of whatever is under the cursor.
+gf: Go to the file declaration of whatever is under the cursor.
+gD: Open a “peek definition” view to see where something is defined.
+gF: Open a “peek declaration” view.
+gH: Open the “Find References” search.
+gO: Open the “Go to Symbol” command (like a file outline).
+gh: Show hover info (same as K but probably from a different mapping).
+Diagnostics
+
+[d: Jump to the previous diagnostic (like a warning or error).
+]d: Jump to the next diagnostic.
+<C-W><C-D> or <C-W>d: Show diagnostics under the cursor in a floating popup or somewhere similar.
+Matchit (Bracket/Tag Matching)
+
+%: Move to the matching character (e.g., matching parenthesis or bracket).
+[% / ]% / g%: These variations come from the “matchit” plugin. They help jump to matching tags, brackets, or constructs.
+Code Actions & Comments (VSCode Integration)
+
+= / ==: Trigger some code action (like formatting) based on your VSCode/Neovim integration.
+gq / gqq: Trigger formatting or code actions (like gq does in Vim by default to format text, but here it might be calling a VSCode code action).
+gc / gcc: Trigger commenting actions via VSCode’s code actions (like commenting or uncommenting selected lines).
+z=: Open the Quick Fix menu (VSCode’s “lightbulb” actions).
+Window Management (VSCode Panels)
+
+<C-W>w, <C-W><C-W>: Move to the next editor group to the right.
+<C-W>p, <C-W>W: Move to the previous editor group to the left.
+<C-W>t, <C-W>b: Move focus to the top/first editor group or last editor group.
+<C-W><C-V>, <C-W>v: Split the current window vertically.
+<C-W><C-S>, <C-W>s: Split the current window horizontally.
+<C-W>c, <C-W><C-C>, <C-W>q: Close the current editor.
+<C-W>gd, <C-W>gf: Open definition aside (like a side-by-side definition view).
+Resizing Editor Groups
+
+<C-W><, <C-W>>: Decrease/Increase editor width.
+<C-W>-, <C-W>+: Decrease/Increase editor height.
+<C-W>_: Toggle editor widths (maximize/minimize).
+<C-W>=: Even out all editor group widths.
+Joining and Navigating Between Editor Groups
+
+<C-W>o, <C-W><C-O>: Join all editor groups into one (close all except the current one).
+<C-W><ArrowKeys> (Up/Down/Left/Right): Move focus to the editor above/below/left/right.
+<C-W><S-ArrowKeys>: Move the active editor group around (rearrange groups).
+<C-W><C-ArrowKeys>: Move the current editor to another group (e.g., <C-W><C-Right> moves the editor to the right group).
+Jumps
+
+<C-I>: Jump forward in the jump list (like going forward to where you were).
+<C-O>: Jump backward in the jump list.
+<C-T>: Jump back in the tag stack (like Ctrl-t in Vim).
+Scrolling the Screen
+
+zb, z-: Scroll the screen so the cursor line is at the bottom.
+zz, z.: Scroll the screen so the cursor line is at the center.
+zt, z<CR>: Scroll the screen so the cursor line is at the top.
+File/URI Handling
+
+gx: Open the file or URL under the cursor with the default system handler (like a browser for URLs).
+Miscellaneous
+
+&: Repeat the last “substitute” command, just like in Vim.
+Y: Yank from the cursor to the end of the line.
+ZQ: Quit without saving.
+ZZ: Write and quit.
+<C-L>: Clear search highlights, update diffs, and redraw the screen.

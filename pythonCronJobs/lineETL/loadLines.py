@@ -5,11 +5,14 @@ import dotenv
 
 
 dotenv.load_dotenv()
+print(os.getenv('BETTING_LINES_URL'))
+print(os.getenv('BETTING_LINES_PORT'))
+print(os.getenv('BETTING_LINES_CACHE_KEY'))
 # Connect to Redis (Betting Cache Instance)
 r = redis.Redis(
-  host='redis-15731.c93.us-east-1-3.ec2.redns.redis-cloud.com',
-  port=15731,
-  password=os.getenv('BETTING_CACHE_KEY')
+  host=os.getenv('BETTING_LINES_URL'),
+  port=os.getenv('BETTING_LINES_PORT'),
+  password=os.getenv('BETTING_LINES_CACHE_KEY')
 )
 
     

@@ -119,8 +119,4 @@ button {
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
-    .stat-column {
-        flex: 1 1 100%; /* Stack columns vertically on small screens */
-    }
-} 
+

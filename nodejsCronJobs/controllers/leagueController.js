@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const League = require('../models/League'); // Assuming you have a League model
-const Team = require('../models/Team');
-const LeagueService = require()
+const League = require('../models/League');
 
 
 // Get league by ID
 router.get('/:id', async (req, res) => {
     try {
+        console.log('League Controller');
         const league = await League.findById(req.params.id);
         if (!league) {
             return res.status(404).json({ message: 'League not found' });
