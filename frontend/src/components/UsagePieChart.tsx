@@ -9,33 +9,37 @@ interface UsagePieChartProps {
   title: string;
   color: string;
   data: {
-    position: "QB" | "RB" | "WR" | "TE" | "K";
-    player_display_name?: string;
-    attempts: number;
-    targets?: number;
-    target_share?: number;
-    week: number;
+    weekly: {
+      position: string;
+      player_display_name?: string;
+      attempts: number;
+      targets?: number;
+      target_share?: number;
+      week: number;
+      rushing_yards?: number;
+      rushing_tds?: number;
+      receptions?: number;
+      receiving_yards?: number;
+      receiving_tds?: number;
+    }
   };
 }
 
 type GraphData = Array<[string, string | number]> | Array<{ name: string; value: number }>;
 
-
-
-export default function UsagePieChart({ props }: { props: UsagePieChartProps }) {
-  const { title, color, data } = props;
+export default function UsagePieChart({ title,color, data }: UsagePieChartProps) {
   const [usage, setUsage] = useState<string | number>("");
   const [graphData, setGraphData] = useState<GraphData | null>(null);
 
   useEffect(() => {
     console.log("data", data);
-    const { usageValue, graph } = processData(data);
+    const { usageValue, graph } = processData(data.weekly);
     setUsage(usageValue);
     setGraphData(graph);
-
+    console.log("data received ", data);
   }, [data]);
 
-  const processData = (data: UsagePieChartProps['data']): {
+  const processData = (data: UsagePieChartProps['data']['weekly']): {
     usageValue: string | number;
     graph: GraphData;
   } => {
@@ -44,16 +48,16 @@ export default function UsagePieChart({ props }: { props: UsagePieChartProps }) 
     let usageValue: string | number;
     let graph: GraphData;
     let passAttempts: number;
-    switch (data["position"]) {
+    switch (data.position) {
       case "QB":
         labelPrimary = "Passes";
         labelSecondary = "Snaps";
        
-        usageValue = parseInt((data["attempts"] / 100 * 100).toFixed(0));
+        usageValue = parseInt((data.attempts / 100 * 100).toFixed(0));
         graph = [
           ['Play Type', 'Snaps'],
-          ["Passes", data["attempts"]],
-          ["Rushes", 100 - data["attempts"]]
+          ["Passes", data.attempts],
+          ["Rushes", 100 - data.attempts]
         ];
         break;
 
@@ -105,16 +109,16 @@ export default function UsagePieChart({ props }: { props: UsagePieChartProps }) 
         graph = [{ name: "N/A", value: 100 }];
     }
 
-    return { usageValue, graph };
+    return { usageValue: usageValue.toFixed(0), graph };
   };
 
   const analyzeData = (): string | undefined => {
-    if (data["position"] === "QB") {
+    if (data.weekly.position === "QB") {
         console.log("usage", usage);
-      const player = { name: data["player_display_name"], 
-        position: data["position"], 
+      const player = { name: data.weekly.player_display_name, 
+        position: data.weekly.position, 
         usage: usage,
-        week: data["week"]
+        week: data.weekly.week
       };
       return;
     }
@@ -153,19 +157,15 @@ export default function UsagePieChart({ props }: { props: UsagePieChartProps }) 
       />
       </ResponsiveContainer>
       <StatBar    
-        props= {{
-            values: {
-                "Week": data["week"],
+        values={{
+                "Week": data.weekly.week,
                 "Usage": `${usage}%`,
                 "Rank": 10,
-            },
-            paddingTop: "1vw"
         }}
+        paddingTop="1vw"
       />
     </div>
 
-     
-    
   );
 }
 

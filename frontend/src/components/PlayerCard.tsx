@@ -6,25 +6,34 @@ import StatBar from './StatBar';
 import DataCard from './DataCard';
 import { headerMapping } from '../utils/headerMapping';
 import { ProjectionProvider } from './ProjectionContext';
+import { useLocation } from 'react-router-dom';
 
 
-interface WeeklyData {
-  player_display_name: string;
-  position: string;
-  recent_team: keyof typeof colors;
-  fantasy_points_ppr: number;
-  fantasy_points: number;
-  headshot_url: string;
-}
-interface SeasonData {
- fantasy_points_ppr: number;
- fantasy_points: number;
- games_played: number;
-}
 // Add interface for Player props
 interface Player {
-  weekly: WeeklyData;
-  season: SeasonData;
+  weekly:{
+    player_display_name: string;
+    position: string;
+    recent_team: keyof typeof colors;
+    fantasy_points_ppr: number;
+    fantasy_points: number;
+    headshot_url: string;
+    attempts: number;
+    completions: number;
+    passing_yards: number;
+    passing_tds: number;
+    interceptions: number;
+    rushing_yards: number;
+    rushing_tds: number;
+    receptions: number;
+    receiving_yards: number;
+    receiving_tds: number;
+  }
+  season:{
+    fantasy_points_ppr: number;
+    fantasy_points: number;
+    games: number;
+  }
 }
 
 
@@ -63,15 +72,13 @@ export function PlayerCard({ player }: PlayerCardProps) {
             </div> */}
           </h2>
           <StatBar 
-            props={{
-                values: {
+            values={{
                     "Pos": player.weekly.position,
-                    "PPG": player.season.fantasy_points_ppr / player.season.games_played || player.season.fantasy_points / player.season.games_played || 0,
+                    "PPG": (player.season.fantasy_points_ppr / player.season.games).toFixed(1) || (player.season.fantasy_points / player.season.games).toFixed(2) || 0,
                     "Team": player.weekly.recent_team
-                },
-                paddingTop: "0vw"
-            }}
-          />
+                }}
+                paddingTop="0vw"
+            />
 
         </div>
       </div>

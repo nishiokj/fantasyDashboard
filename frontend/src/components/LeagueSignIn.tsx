@@ -38,6 +38,7 @@ const LeagueSignIn = () => {
         if (response.status === 200) {
           setSignedIn(true);
           setTeams(response.data);
+          
         }
       })
       .catch(error => {

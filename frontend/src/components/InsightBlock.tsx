@@ -35,7 +35,7 @@ interface ProjectionContextType {
  * UsagePieChart and StatBar. It handles the styling and layout
  * based on the provided props.
  */
-const InsightBlock = (props: InsightBlockProps) => {
+export const InsightBlock = (props: InsightBlockProps) => {
   const { title, color, data, position } = props;
 
   const shortenedTitles: { [key: string]: string } = {
@@ -57,11 +57,9 @@ const InsightBlock = (props: InsightBlockProps) => {
     if (title === "RECENT USAGE") {      
       return (
         <UsagePieChart
-          props={{
-            title,
-            color,
-            data
-          }}
+          title={title}
+          color={color}
+          data={data}
         />
       );
     }
@@ -94,19 +92,14 @@ const InsightBlock = (props: InsightBlockProps) => {
       return (
         <div className="projection-block">
         <StatBar 
-          props={{
-            values: topRow,
-          paddingTop: "0vw"
-        }}
-      />
+          values={topRow}
+          paddingTop="0vw"
+        />
 
       <StatBar
-      props = {{
-        values: bottomRow,
-        paddingTop: "0vw"
-
-        }}
-        />
+      values={bottomRow}
+      paddingTop="0vw"
+      />
       </div>
     );
       }

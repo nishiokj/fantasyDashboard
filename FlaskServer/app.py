@@ -94,15 +94,32 @@ def get_fantasy_roster_by_team_id(league_id, team_id):
         roster = league.teams[int(team_id)-1].roster
         return_roster = {}
         for player in roster:
-            return_roster[player.playerId] = player.name
+            player_id = get_player_id_by_name(player.name)
+            if player_id:
+                try:
+                    player_data = redis_stats_client.get(f"player_stats:{player_id}")
+                    player_projection = redis_lines_client.get(f"player_lines:{player_id}")
+                    
+                    if player_data:
+                        return_roster[player_id] = {
+                            "player_data": json.loads(player_data),
+                            "player_projection": json.loads(player_projection) if player_projection else None
+                        }
+                except json.JSONDecodeError as e:
+                    app.logger.error(f"JSON parsing error for player {player.name}: {str(e)}")
+                    continue
         return jsonify(return_roster)
     except Exception as e:
-        app.logger.error(f"Unexpected error: {str(e)}")
+        app.logger.error(f"Unexpected exception ... error: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
 
 def get_player_id_by_name(player_name):
-    return json.loads(redis_stats_client.get(f"player_name_to_player_id:{player_name}"))
+    player = redis_stats_client.get(f"player_name_to_player_id:{player_name}")
+    if player:
+        return json.loads(player)
+    else:
+        return None
 
 
 @app.route('/player/<player_name>/id', methods=['GET'])
@@ -124,6 +141,7 @@ def get_player_weekly_stats(player_name):
     player_stats = redis_stats_client.get(f"player_weekly_stats:{player_id}")
     player_weekly_stats = json.loads(player_stats)['weekly_stats']
     return jsonify(player_weekly_stats)
+
 
 
 @app.route('/player/<player_name>/lines', methods=['GET'])

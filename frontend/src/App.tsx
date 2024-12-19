@@ -5,6 +5,7 @@ import { PlayerCard } from './components/PlayerCard';
 import TeamPage from './components/TeamPage';
 import './App.css';
 import { colors } from './utils/teamMapping';
+import PlayerCardWrapper from './components/PlayerCardWrapper';
 
 
 
@@ -16,11 +17,21 @@ interface PlayerData {
     recent_team: keyof typeof colors;
     fantasy_points_ppr: number;
     fantasy_points: number;
+    attempts: number;
+    completions: number;
+    passing_yards: number;
+    passing_tds: number;
+    interceptions: number;
+    rushing_yards: number;
+    rushing_tds: number;
+    receptions: number;
+    receiving_yards: number;
+    receiving_tds: number;
   };
   season: {
     fantasy_points_ppr: number;
     fantasy_points: number;
-    games_played: number;
+    games: number;
     receptions: number;
   };
 }
@@ -63,6 +74,10 @@ function App() {
     {
       path: "/team/:leagueId/:team/:teamId",
       element: <TeamPage />,
+    },
+    {
+      path: "/player/:playerId",
+      element: <PlayerCardWrapper />  ,
     },
   ]);
 

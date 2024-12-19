@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import './StatBar.css';
 
 interface StatBarProps {
-  props: {
     values: {
       [key: string]: string | number;
     };
     paddingTop?: string;
-  }
 }
 
 /**
@@ -18,8 +16,7 @@ interface StatBarProps {
  * @param {Object} props - Component properties
  * @param {Object} props.values - Key-value pairs representing statistics
  */
-export default function StatBar({ props }: StatBarProps) {
-    const { values, paddingTop } = props;
+export default function StatBar({ values, paddingTop }: StatBarProps) {
     console.log(values);
     return (
         <div className="stat-bar" style={{padding: paddingTop}}>

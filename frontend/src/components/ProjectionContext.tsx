@@ -19,11 +19,13 @@ export const ProjectionContext = React.createContext<ProjectionContextType | nul
 // Add at the top of ProjectionContext.tsx
 interface ProjectionProviderProps {
   children: React.ReactNode;
-  playerName: string;
+  playerName?: string;
+  teamName?: string;
+  roster?: [string]
 }
 
-// Create the Provider Component
-export const ProjectionProvider: React.FC<ProjectionProviderProps> = ({ children, playerName }) => {
+// Create the Provider 
+export const ProjectionProvider: React.FC<ProjectionProviderProps> = ({ children, playerName, teamName, roster }) => {
   console.log("ProjectionProvider rendered with playerName:", playerName);
 
   const [projectionData, setProjectionData] = useState(null);
@@ -32,14 +34,26 @@ export const ProjectionProvider: React.FC<ProjectionProviderProps> = ({ children
 
   useEffect(() => {
     console.log("useEffect triggered with playerName:", playerName);
-
-    if (!playerName) {
-      console.log("No playerName provided to ProjectionProvider");
-      setLoading(false);
-      return;
-    }
-
-    const fetchProjectionData = async () => {
+      const fetchProjectionTeamData = async (roster: [string]) => {
+      console.log(`Fetching projection data for team: ${roster}`);
+      try {
+        const string_roster = roster.join(',');
+        const response = await fetch(`http://localhost:5001/team/${encodeURIComponent(string_roster)}/lines`);
+        console.log("Fetch response status:", response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched projection data:", data);
+        setProjectionData(data);
+      } catch (err: any) {
+        console.error("Error fetching projection data:", err);
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    const fetchProjectionData = async (playerName: string) => {
       console.log(`Fetching projection data for player: ${playerName}`);
       try {
         const response = await fetch(`http://localhost:5001/player/${encodeURIComponent(playerName)}/lines`);
@@ -57,8 +71,19 @@ export const ProjectionProvider: React.FC<ProjectionProviderProps> = ({ children
         setLoading(false);
       }
     };
+    if (!playerName && !teamName) {
+      console.log("No playerName provided to ProjectionProvider");
+      setLoading(false);
+    }
 
-    fetchProjectionData();
+    else if(playerName) {
+      fetchProjectionData(playerName);
+    }
+    else if(roster) {
+      fetchProjectionTeamData(roster);
+    }
+
+    
   }, [playerName]);
 
   return (
